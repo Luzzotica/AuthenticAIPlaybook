@@ -124,7 +124,7 @@ export default function NameInputChapter({
               htmlFor="name"
               className="block text-sm font-medium text-gray-300 mb-2"
             >
-              What's your name?
+              What's your first name?
             </label>
             <input
               type="text"

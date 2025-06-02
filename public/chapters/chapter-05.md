@@ -45,7 +45,10 @@ Then I'm going to give you the prompts that you can use to write:
 2. Social Media Posts, and even
 3. BOOKS
 
-in YOUR voice AND the training on how to use each of them!
+in YOUR voice!
+
+We won't stop there though because I've found that just giving people prompts isn't that effective...  
+So before we get to the prompts I'm going to show you how they work.  
 
 You ready to get vulnerable and share your greatness with the world {{name}}?
 
