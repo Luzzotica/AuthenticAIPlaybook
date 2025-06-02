@@ -1,11 +1,9 @@
 ---
-title: "Chapter 3: The First Friend"
-backgroundImage: "/images/chapter3.jpg"
-music: "/audio/chapter3.mp3"
-textEffect: "typewriter"
+title: "The First Friend"
+backgroundImage: "/images/chapter3.png"
 ---
 
-# Chapter 3: The First Friend
+# The First Friend
 
 I walked away because I didn’t know how to train it to be good enough to sound like *me*.
 

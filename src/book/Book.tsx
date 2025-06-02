@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useBookVars } from "./store/bookVars";
 import TextChapter from "./templates/TextChapter";
-import { TextChapterProps } from "./types";
 import BookNavigation from "./BookNavigation";
 import ChapterSelector from "./ChapterSelector";
 import { loadAllChapters, ParsedChapter } from "./utils/chapterLoader";
@@ -13,7 +12,10 @@ export default function Book() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
+  const [volume, setVolume] = useState(0.2); // Default to 30%
+  const [isMuted, setIsMuted] = useState(false);
+  const [showAudioPrompt, setShowAudioPrompt] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const {
     setBookVar,
@@ -26,11 +28,22 @@ export default function Book() {
   // Get current chapter index from store
   const chapterIdx = getCurrentChapter();
 
-  // Initialize the single soundtrack
+  // Check if user has previously allowed audio and set up autoplay
   useEffect(() => {
+    const hasAllowedAudio =
+      localStorage.getItem("audioPermissionGranted") === "true";
+    setHasUserInteracted(hasAllowedAudio);
+
     if (audioRef.current) {
-      audioRef.current.volume = volume;
-      // Don't auto-play, let user choose to start the music
+      audioRef.current.volume = 0.2;
+
+      // Try autoplay if user has previously allowed it
+      if (hasAllowedAudio) {
+        tryAutoplay();
+      } else {
+        // Show prompt for first-time users
+        setShowAudioPrompt(true);
+      }
     }
   }, []);
 
@@ -38,25 +51,83 @@ export default function Book() {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
+      audioRef.current.muted = isMuted;
     }
-  }, [volume]);
+  }, [volume, isMuted]);
 
-  // Toggle play/pause
-  const togglePlayback = async () => {
+  // Try to autoplay audio
+  const tryAutoplay = async () => {
     if (!audioRef.current) return;
 
     try {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        await audioRef.current.play();
-        setIsPlaying(true);
-      }
-    } catch (err) {
-      console.log("Audio playback error:", err);
+      await audioRef.current.play();
+      setIsPlaying(true);
+      setShowAudioPrompt(false);
+      // Remember that user has allowed audio
+      localStorage.setItem("audioPermissionGranted", "true");
+    } catch (error) {
+      console.log("Autoplay failed, user interaction required");
+      setShowAudioPrompt(true);
     }
   };
+
+  // Toggle mute/unmute and play/pause
+  const toggleMute = async () => {
+    if (audioRef.current) {
+      const newMutedState = !isMuted;
+      setIsMuted(newMutedState);
+      audioRef.current.muted = newMutedState;
+
+      // When unmuting, also play the audio
+      if (!newMutedState && !isPlaying) {
+        try {
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } catch (err) {
+          console.log("Audio playback error:", err);
+        }
+      }
+
+      if (!hasUserInteracted) {
+        setHasUserInteracted(true);
+        localStorage.setItem("audioPermissionGranted", "true");
+      }
+    }
+  };
+
+  // Handle first-time audio permission
+  const handleAllowAudio = async () => {
+    setHasUserInteracted(true);
+    setShowAudioPrompt(false);
+    await tryAutoplay();
+  };
+
+  // Listen for user interactions to enable autoplay
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      setHasUserInteracted(true);
+      if (!isPlaying && audioRef.current && !showAudioPrompt) {
+        tryAutoplay();
+      }
+
+      // Remove listeners after first interaction
+      document.removeEventListener("click", handleFirstInteraction);
+      document.removeEventListener("keydown", handleFirstInteraction);
+      document.removeEventListener("scroll", handleFirstInteraction);
+    };
+
+    if (!hasUserInteracted) {
+      document.addEventListener("click", handleFirstInteraction);
+      document.addEventListener("keydown", handleFirstInteraction);
+      document.addEventListener("scroll", handleFirstInteraction);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleFirstInteraction);
+      document.removeEventListener("keydown", handleFirstInteraction);
+      document.removeEventListener("scroll", handleFirstInteraction);
+    };
+  }, [hasUserInteracted, isPlaying, showAudioPrompt]);
 
   // Track the furthest chapter the user has reached
   useEffect(() => {
@@ -177,68 +248,64 @@ export default function Book() {
         style={{ display: "none" }}
       />
 
+      {/* First-time audio permission prompt */}
+      {showAudioPrompt && !hasUserInteracted && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-sm mx-4 text-center">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Audio Available
+            </h3>
+            <p className="text-gray-600 mb-4">
+              This book has a beautiful soundtrack. Would you like to play it?
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={handleAllowAudio}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Play Audio
+              </button>
+              <button
+                onClick={() => setShowAudioPrompt(false)}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
+              >
+                Skip
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Audio Controls */}
-      <div className="fixed top-4 right-4 z-50 bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-lg p-3 flex items-center gap-3">
-        {/* Play/Pause Button */}
+      <div className="fixed top-4 right-4 z-50">
+        {/* Mute/Unmute Button */}
         <button
-          onClick={togglePlayback}
-          className="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors"
-          aria-label={isPlaying ? "Pause soundtrack" : "Play soundtrack"}
+          onClick={toggleMute}
+          className="w-10 h-10 flex items-center justify-center transition-colors hover:bg-gray-800 hover:bg-opacity-30 rounded-full"
+          aria-label={isMuted ? "Unmute soundtrack" : "Mute soundtrack"}
         >
-          {isPlaying ? (
+          {isMuted ? (
             <svg
-              className="w-5 h-5 text-white"
+              className="w-6 h-6 text-white"
               fill="currentColor"
-              viewBox="0 0 20 20"
+              viewBox="0 0 24 24"
             >
+              <path d="M3 9v6h4l5 5V4l-5 5H3z" />
               <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clipRule="evenodd"
+                d="m22.5 12 1.5-1.5-1.5-1.5-1.5 1.5-1.5-1.5-1.5 1.5 1.5 1.5-1.5 1.5 1.5 1.5 1.5-1.5 1.5 1.5 1.5-1.5L22.5 12z"
+                fill="white"
               />
             </svg>
           ) : (
             <svg
-              className="w-5 h-5 text-white ml-0.5"
+              className="w-6 h-6 text-white"
               fill="currentColor"
-              viewBox="0 0 20 20"
+              viewBox="0 0 24 24"
             >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                clipRule="evenodd"
-              />
+              <path d="M3 9v6h4l5 5V4l-5 5H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
             </svg>
           )}
         </button>
-
-        {/* Volume Control */}
-        <div className="flex items-center gap-2">
-          <svg
-            className="w-4 h-4 text-white"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.792L4.91 13.5H3a1 1 0 01-1-1v-3a1 1 0 011-1h1.91l3.473-3.292a1 1 0 011.617.792zM13.5 7.5a1 1 0 011.414 0 3 3 0 010 4.243 1 1 0 11-1.414-1.414 1 1 0 000-1.415 1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={volume}
-            onChange={(e) => setVolume(parseFloat(e.target.value))}
-            className="w-20 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
-            aria-label="Volume control"
-          />
-          <span className="text-white text-xs w-8 text-center">
-            {Math.round(volume * 100)}%
-          </span>
-        </div>
       </div>
 
       {/* Chapter Selector Hamburger Menu */}
@@ -258,6 +325,7 @@ export default function Book() {
             setBookVar={setBookVar}
             getBookVar={getBookVar}
             clearAllVars={clearAllVars}
+            chapterIndex={chapterIdx}
           />
         </div>
       </div>

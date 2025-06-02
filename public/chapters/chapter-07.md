@@ -1,11 +1,9 @@
 ---
-title: "Chapter 7: Step 1 - Input"
-backgroundImage: "/images/chapter7.jpg"
-music: "/audio/chapter7.mp3"
-textEffect: "fade"
+title: "Step 1: Input"
+backgroundImage: "/images/chapter7.png"
 ---
 
-# Chapter 7: Step 1, Input – Feed the AI Your Stories
+# Step 1: Input – Feed the AI Your Stories
 
 {{name}} let me tell you a secret.
 

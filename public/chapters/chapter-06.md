@@ -1,11 +1,9 @@
 ---
-title: "Chapter 6: The Authentic AI Voice System"
-backgroundImage: "/images/chapter6.jpg"
-music: "/audio/chapter6.mp3"
-textEffect: "fade"
+title: "The Authentic AI Voice System"
+backgroundImage: "/images/chapter6.png"
 ---
 
-# Chapter 6: The Authentic AI Voice System
+# The Authentic AI Voice System
 
 {{name}}, there are 3 steps to get AI to sound like you:
 

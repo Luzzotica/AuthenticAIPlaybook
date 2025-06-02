@@ -147,7 +147,8 @@ export default function ChapterSelector({
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="fixed top-4 left-4 z-50 w-12 h-12 bg-gray-800 bg-opacity-80 hover:bg-opacity-100 rounded-lg flex items-center justify-center transition-all duration-200 backdrop-blur-sm"
+        className="fixed top-4 left-4 w-12 h-12 bg-gray-800 bg-opacity-80 hover:bg-opacity-100 rounded-lg flex items-center justify-center transition-all duration-200 backdrop-blur-sm"
+        style={{ zIndex: 60 }}
         aria-label="Chapter Menu"
       >
         <div className="w-6 h-6 flex flex-col justify-center items-center">
@@ -172,21 +173,23 @@ export default function ChapterSelector({
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="fixed inset-0 bg-black bg-opacity-50 z-50"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Chapter Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 bg-opacity-95 backdrop-blur-md z-40 transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 bg-opacity-95 backdrop-blur-md z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-6 pt-20">
-          <h2 className="text-xl font-bold text-white mb-6">Chapters</h2>
+        <div className="p-6 pt-20 h-full flex flex-col">
+          <h2 className="text-xl font-bold text-white mb-6 flex-shrink-0">
+            Chapters
+          </h2>
 
-          <div className="space-y-2 max-h-[calc(100vh-120px)] overflow-y-auto">
+          <div className="flex-1 overflow-y-auto space-y-2 min-h-0">
             {chapters.map((chapter, index) => (
               <button
                 key={chapter.slug}
@@ -214,7 +217,7 @@ export default function ChapterSelector({
             ))}
           </div>
 
-          <div className="mt-6 pt-4 border-t border-gray-700">
+          <div className="mt-6 pt-4 border-t border-gray-700 flex-shrink-0">
             <div className="text-xs text-gray-400 space-y-1">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-blue-600 rounded-full"></div>

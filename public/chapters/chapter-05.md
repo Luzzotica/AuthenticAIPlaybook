@@ -1,11 +1,9 @@
 ---
-title: "Chapter 5: Achieving Greatness"
-backgroundImage: "/images/chapter5.jpg"
-music: "/audio/chapter5.mp3"
-textEffect: "fade"
+title: "Achieving Greatness"
+backgroundImage: "/images/chapter5.png"
 ---
 
-# Chapter 5: Achieving Greatness
+# Achieving Greatness
 
 *"This is perfect. Let’s move on."*
 

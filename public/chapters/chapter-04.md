@@ -1,11 +1,9 @@
 ---
-title: "Chapter 4: The Second Friend"
-backgroundImage: "/images/chapter4.jpg"
-music: "/audio/chapter4.mp3"
-textEffect: "typewriter"
+title: "The Second Friend"
+backgroundImage: "/images/chapter4.png"
 ---
 
-# Chapter 4: The Second Friend
+# The Second Friend
 
 He was mind blown (probably almost as much as yours will be {{name}}).
 

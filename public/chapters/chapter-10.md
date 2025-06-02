@@ -1,11 +1,9 @@
 ---
-title: "Chapter 10: The Beginning"
-backgroundImage: "/images/chapter10.jpg"
-music: "/audio/chapter10.mp3"
-textEffect: "fade"
+title: "Overview"
+backgroundImage: "/images/chapter10.png"
 ---
 
-# Chapter 10: The Beginning
+# Overview
 
 That's the system {{name}}.
 

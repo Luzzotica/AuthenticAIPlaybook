@@ -94,52 +94,11 @@ export const CHAPTER_CONFIGS: ChapterConfig[] = [
     slug: "chapter-11",
     type: "component",
     source: "ExampleInteractiveChapter",
-    title: "Chapter 11: The Crossroads",
+    title: "The Prompt Library",
     metadata: {
       backgroundImage: "/images/crossroads.jpg",
     },
   },
-  // Example of component chapter with string reference and props:
-  // {
-  //   slug: "customizable-easy",
-  //   type: "component",
-  //   source: "CustomizableChapter", // component name as string
-  //   title: "Easy Chapter",
-  //   metadata: {
-  //     backgroundImage: "/images/easy.jpg",
-  //   },
-  //   componentProps: {
-  //     title: "Welcome to the Easy Path",
-  //     message: "This chapter is designed to be gentle and welcoming.",
-  //     difficulty: "easy",
-  //     theme: "light",
-  //     showChoices: false,
-  //   }
-  // },
-  // Example of component chapter with direct component reference and props:
-  // {
-  //   slug: "customizable-hard",
-  //   type: "component",
-  //   source: CustomizableChapter, // direct component reference
-  //   title: "Hard Challenge",
-  //   metadata: {
-  //     backgroundImage: "/images/challenge.jpg",
-  //     music: "/audio/intense.mp3",
-  //   },
-  //   componentProps: {
-  //     title: "The Ultimate Challenge",
-  //     message: "Only the bravest adventurers dare to proceed.",
-  //     difficulty: "hard",
-  //     theme: "dark",
-  //     showChoices: true,
-  //     choices: [
-  //       "Face the dragon head-on",
-  //       "Sneak around the back",
-  //       "Use magic to distract it",
-  //       "Retreat and find another way"
-  //     ],
-  //   }
-  // }
 ];
 
 export async function loadMarkdownChapter(
@@ -164,6 +123,7 @@ export async function loadMarkdownChapter(
     return {
       content: htmlContent,
       backgroundImage: data.backgroundImage,
+      backgroundVideo: data.backgroundVideo,
       textEffect: data.textEffect as "typewriter" | "none" | undefined,
       backgroundAnimation: data.backgroundAnimation,
       title: data.title,

@@ -1,11 +1,9 @@
 ---
-title: "Chapter 1: The First Time I Walked Away From AI"
-backgroundImage: "/images/chapter1.jpg"
-music: "/audio/chapter1.mp3"
-textEffect: "typewriter"
+title: "The First Time I Walked Away From AI"
+backgroundImage: "/images/chapter1.png"
 ---
 
-# Chapter 1: The First Time I Walked Away From AI
+# The First Time I Walked Away From AI
 
 The first time I walked away from AI, I was a software developer making $200/hr.
 

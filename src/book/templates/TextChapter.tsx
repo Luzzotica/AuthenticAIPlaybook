@@ -1,5 +1,5 @@
 import BookPage from "./BookPage";
-import Typewriter from "../effects/Typewriter";
+import ScrollFadeText from "../effects/ScrollFadeText";
 import { BookChapterProps, TextChapterProps } from "../types";
 import React from "react";
 import {
@@ -10,6 +10,7 @@ import {
 export default function TextChapter({
   content,
   backgroundImage,
+  backgroundVideo,
   backgroundAnimation,
   textEffect,
   nextChapter,
@@ -17,6 +18,7 @@ export default function TextChapter({
   setBookVar,
   getBookVar,
   clearAllVars,
+  chapterIndex,
 }: TextChapterProps & BookChapterProps) {
   const renderContent = () => {
     // If content is a React element (component chapter)
@@ -42,35 +44,40 @@ export default function TextChapter({
         // Replace variables in HTML content
         const processedHTML = replaceBookVariablesInHTML(content, getBookVar);
 
-        // Render HTML content from markdown
+        // Render HTML content from markdown with block-by-block scroll fade-in
         return (
-          <div
-            className="prose prose-lg max-w-none text-white prose-headings:text-white prose-p:text-white prose-strong:text-white prose-em:text-white prose-a:text-blue-300 prose-a:hover:text-blue-200 prose-a:underline"
-            dangerouslySetInnerHTML={{ __html: processedHTML }}
-          />
+          <ScrollFadeText resetKey={chapterIndex} blockByBlock={true}>
+            <div
+              className="prose prose-lg max-w-none text-white prose-headings:text-white prose-p:text-white prose-strong:text-white prose-em:text-white prose-a:text-blue-300 prose-a:hover:text-blue-200 prose-a:underline"
+              dangerouslySetInnerHTML={{ __html: processedHTML }}
+            />
+          </ScrollFadeText>
         );
       }
 
       // Replace variables in plain text content
       const processedText = replaceBookVariables(content, getBookVar);
 
-      // Handle plain text with effects
-      if (textEffect === "typewriter") {
-        return <Typewriter>{processedText}</Typewriter>;
-      }
-      return <p className="text-lg leading-relaxed">{processedText}</p>;
+      // Use scroll fade-in with reset key for navigation
+      return (
+        <ScrollFadeText resetKey={chapterIndex}>
+          <p className="text-lg leading-relaxed">{processedText}</p>
+        </ScrollFadeText>
+      );
     }
 
-    // Fallback for other React nodes
-    return content;
+    // Wrap other React nodes in scroll fade-in with reset key
+    return <ScrollFadeText resetKey={chapterIndex}>{content}</ScrollFadeText>;
   };
 
   return (
     <BookPage
       backgroundImage={backgroundImage}
+      backgroundVideo={backgroundVideo}
       backgroundAnimation={backgroundAnimation}
+      resetKey={chapterIndex}
     >
-      <div className="space-y-4">{renderContent()}</div>
+      <div className="space-y-8">{renderContent()}</div>
     </BookPage>
   );
 }

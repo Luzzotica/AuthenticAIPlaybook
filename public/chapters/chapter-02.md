@@ -1,11 +1,9 @@
 ---
-title: "Chapter 2: The Second Failure"
-backgroundImage: "/images/chapter2.jpg"
-music: "/audio/chapter2.mp3"
-textEffect: "typewriter"
+title: "The Second Failure"
+backgroundImage: "/images/chapter2.png"
 ---
 
-# Chapter 2: The Second Failure
+# The Second Failure
 
 ...coaching.
 
@@ -16,7 +14,7 @@ It felt safe. Human. Uncopyable.
 
 (It also made me go broke. But that's a story for another time.)
 
-Then I made my SECOND mistake.
+Then I made my SECOND mistake, {{name}}.
 
 I *tried* (key word) to use AI to help me write.
 

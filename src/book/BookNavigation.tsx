@@ -19,7 +19,7 @@ export default function BookNavigation({
 
   return (
     <div
-      className="fixed left-0 right-0 flex justify-center items-center z-50"
+      className="fixed left-0 right-0 flex justify-center items-center z-40"
       style={{ bottom: 40 }}
     >
       <div className="flex space-x-10 pointer-events-auto">

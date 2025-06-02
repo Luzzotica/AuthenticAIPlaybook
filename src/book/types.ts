@@ -9,7 +9,9 @@ export interface BookChapterProps {
 export interface TextChapterProps {
   content: string | React.ReactNode;
   backgroundImage?: string;
+  backgroundVideo?: string;
   backgroundAnimation?: React.ReactNode;
   textEffect?: "typewriter" | "none";
   textEffectSpeed?: number;
+  chapterIndex?: number;
 }

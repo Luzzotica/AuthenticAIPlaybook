@@ -1,11 +1,9 @@
 ---
-title: "Chapter 9: Step 3 - Iterate"
-backgroundImage: "/images/chapter9.jpg"
-music: "/audio/chapter9.mp3"
-textEffect: "fade"
+title: "Step 3: Iterate"
+backgroundImage: "/images/chapter9.png"
 ---
 
-# Chapter 9: Step 3, Iterate – Refine for Authenticity
+# Step 3: Iterate – Refine for Authenticity
 
 When I was writing my book on Python and building my course for beginners on AI, I spent a lot of time iterating on the chapters until they felt right. Even though the AI had enough of my voice I still had to iterate.
 

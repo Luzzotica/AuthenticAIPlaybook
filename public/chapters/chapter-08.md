@@ -1,11 +1,9 @@
 ---
-title: "Chapter 8: Step 2 - Structure"
-backgroundImage: "/images/chapter8.jpg"
-music: "/audio/chapter8.mp3"
-textEffect: "fade"
+title: "Step 2: Structure"
+backgroundImage: "/images/chapter8.png"
 ---
 
-# Chapter 8: Step 2, Structure – Use Templates to Guide Output
+# Step 2: Structure – Use Templates to Guide Output
 
 When I’m writing content like this I spend a lot of time up front to ensure it starts off right. 
 
