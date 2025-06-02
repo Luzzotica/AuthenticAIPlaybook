@@ -98,7 +98,7 @@ export default function BookPage({
       )}
 
       {/* Black Overlay for text readability */}
-      <div className="fixed inset-0 w-screen h-screen bg-black bg-opacity-50 -z-5" />
+      <div className="fixed inset-0 w-screen h-screen bg-black bg-opacity-60 -z-5" />
 
       {/* Scrollable Text Area */}
       <div className="relative z-10 max-w-2xl mx-auto py-16 px-4 min-h-screen">
