@@ -52,10 +52,10 @@ export default function ExampleInteractiveChapter({
       {!selectedPrompt ? (
         <>
           {/* Break out of parent container for full width */}
-          <div className="relative -mx-4 md:-mx-[calc((100vw-80vw)/2)] lg:-mx-[calc((100vw-1200px)/2)]">
-            <div className="px-4 md:px-8 lg:px-12">
+          <div className="relative -mx-4 md:-mx-8 lg:-mx-8">
+            <div className="px-2 md:px-4 lg:px-8">
               {/* Prompts Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {prompts.map((prompt) => (
                   <button
                     key={prompt.id}

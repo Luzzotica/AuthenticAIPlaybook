@@ -81,7 +81,6 @@ export default function BookPage({
           }`}
           style={{
             backgroundImage: `url(${displayBackground.image})`,
-            backgroundAttachment: "fixed",
           }}
         />
       )}
