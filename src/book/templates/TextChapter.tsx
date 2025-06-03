@@ -57,7 +57,7 @@ export default function TextChapter({
         return (
           <ScrollFadeText resetKey={chapterIndex} blockByBlock={true}>
             <div
-              className="prose prose-lg max-w-none text-white prose-headings:text-white prose-p:text-white prose-strong:text-white prose-em:text-white prose-a:text-blue-300 prose-a:hover:text-blue-200 prose-a:underline prose-ol:text-white prose-li:text-white"
+              className="prose prose-lg max-w-none text-white prose-headings:text-white prose-p:text-white prose-strong:text-white prose-em:text-white prose-a:text-blue-300 prose-a:hover:text-blue-200 prose-a:underline prose-ol:text-white prose-li:text-white marker:text-white"
               dangerouslySetInnerHTML={{ __html: processedHTMLWithTargetBlank }}
             />
           </ScrollFadeText>
