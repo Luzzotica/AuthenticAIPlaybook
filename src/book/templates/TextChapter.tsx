@@ -7,6 +7,11 @@ import {
   replaceBookVariablesInHTML,
 } from "../utils/textReplacer";
 
+// Function to add target="_blank" to all anchor tags
+function addTargetBlankToLinks(html: string): string {
+  return html.replace(/<a /g, '<a target="_blank" ');
+}
+
 export default function TextChapter({
   content,
   backgroundImage,
@@ -44,12 +49,16 @@ export default function TextChapter({
         // Replace variables in HTML content
         const processedHTML = replaceBookVariablesInHTML(content, getBookVar);
 
+        // Add target="_blank" to all anchor tags
+        const processedHTMLWithTargetBlank =
+          addTargetBlankToLinks(processedHTML);
+
         // Render HTML content from markdown with block-by-block scroll fade-in
         return (
           <ScrollFadeText resetKey={chapterIndex} blockByBlock={true}>
             <div
-              className="prose prose-lg max-w-none text-white prose-headings:text-white prose-p:text-white prose-strong:text-white prose-em:text-white prose-a:text-blue-300 prose-a:hover:text-blue-200 prose-a:underline"
-              dangerouslySetInnerHTML={{ __html: processedHTML }}
+              className="prose prose-lg max-w-none text-white prose-headings:text-white prose-p:text-white prose-strong:text-white prose-em:text-white prose-a:text-blue-300 prose-a:hover:text-blue-200 prose-a:underline prose-ol:text-white prose-li:text-white"
+              dangerouslySetInnerHTML={{ __html: processedHTMLWithTargetBlank }}
             />
           </ScrollFadeText>
         );

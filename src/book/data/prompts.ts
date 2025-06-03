@@ -327,7 +327,7 @@ Once you finish content piece 12 (so 2 of each type of content has been made), m
     id: "book-writing-assistant",
     title: "The Book Writing Assistant",
     description:
-      "Helps you write a book folllowing Nicolas Cole's process to write a book in under 30 days.",
+      "Helps you write a book following Nicolas Cole's process to write a book in under 30 days.",
     category: "Book Writing",
     tags: ["book writing", "writing", "book"],
     color: "purple",

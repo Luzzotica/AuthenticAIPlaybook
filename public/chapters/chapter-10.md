@@ -19,7 +19,7 @@ In the next chapter are the prompts I have used to:
 2. Build a course on AI for beginners
 3. Put together a lead magnet on how to get started with AI
 4. Create grand slam offers and proposals
-5. **Close over $100K in business in 8 months.**
+5. **Close over $200K in business in 8 months.**
 
 Each prompt guides you through the Authentic AI Voice System.
 

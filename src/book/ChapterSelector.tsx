@@ -151,10 +151,10 @@ export default function ChapterSelector({
         style={{ zIndex: 60 }}
         aria-label="Chapter Menu"
       >
-        <div className="w-6 h-6 flex flex-col justify-center items-center">
+        <div className="w-6 h-6 flex flex-col justify-center items-center relative">
           <span
             className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
-              isOpen ? "rotate-45 translate-y-1" : "-translate-y-1"
+              isOpen ? "absolute rotate-45" : "-translate-y-1"
             }`}
           />
           <span
@@ -164,7 +164,7 @@ export default function ChapterSelector({
           />
           <span
             className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
-              isOpen ? "-rotate-45 -translate-y-1" : "translate-y-1"
+              isOpen ? "absolute -rotate-45" : "translate-y-1"
             }`}
           />
         </div>

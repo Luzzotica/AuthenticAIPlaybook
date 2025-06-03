@@ -173,10 +173,16 @@ export default function AudioPlayer({
 
       // Update permission based on mute state
       if (newMutedState) {
-        // When muting, disable auto-start for future sessions
+        // When muting, pause the audio and disable auto-start for future sessions
+        if (isPlaying) {
+          audioRef.current.pause();
+          setIsPlaying(false);
+        }
         localStorage.setItem("audioPermissionGranted", "false");
         setHasUserInteracted(false);
-        console.log("Music muted - disabled auto-start for future sessions");
+        console.log(
+          "Music muted and paused - disabled auto-start for future sessions"
+        );
       } else {
         // When unmuting, enable auto-start for future sessions
         localStorage.setItem("audioPermissionGranted", "true");
@@ -184,13 +190,11 @@ export default function AudioPlayer({
         console.log("Music unmuted - enabled auto-start for future sessions");
 
         // When unmuting, also play the audio
-        if (!isPlaying) {
-          try {
-            await audioRef.current.play();
-            setIsPlaying(true);
-          } catch (err) {
-            console.log("Audio playback error:", err);
-          }
+        try {
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } catch (err) {
+          console.log("Audio playback error:", err);
         }
       }
     }
